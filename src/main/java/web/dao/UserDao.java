@@ -11,8 +11,11 @@ public interface UserDao {
   //  public void dropUsersTable();
   //  public void saveUser(User user);
 
-    void saveUser(User user);
+    public void saveUser(User user);
     // public void removeUserById(long id);
    // public List<User> getAllUsers();
   //  public void cleanUsersTable();
+
+    public void removeUser (int id);
+
 }

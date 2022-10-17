@@ -19,9 +19,13 @@ public class UserServiceImpl implements UserService {
         return dao.listUsers();
     }
 
-        public User saveUser(User user){
-            dao.saveUser(user);
-            return user;
-        }
+    public User saveUser(User user) {
+        dao.saveUser(user);
+        return user;
     }
+
+    public void removeUser(int id) {
+        dao.removeUser(id);
+    }
+}
 

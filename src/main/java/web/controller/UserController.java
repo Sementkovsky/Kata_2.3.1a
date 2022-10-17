@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
-
 @Controller
 public class UserController {
 
@@ -19,43 +18,32 @@ public class UserController {
     }
 
 
-  /*
-
-    @GetMapping(value = "/users/add")
-    public String addUsersForm(Model model) {
-        User user = new User();
-        model.addAttribute("add", true);
-        model.addAttribute("contact", user);
-        return "old1";
+    @GetMapping(value = "/users")
+    public String showUsers(Model model) {
+        model.addAttribute("listUsers", userService.listUsers());
+        return "users";
     }
 
-        @PostMapping(value = "/users/add")
-        public String addContact(Model model,
-                @ModelAttribute("user") User user) {
-            try {
-                User newUser = userService.saveUser(user);
-                return "redirect:/users/" + newUser.getId();
-            } catch (Exception ex) {
-                // log exception first,
-                // then show error
-                String errorMessage = ex.getMessage();
-              //  logger.error(errorMessage);
-                model.addAttribute("errorMessage", errorMessage);
-
-                //model.addAttribute("contact", contact);
-                model.addAttribute("add", true);
-                return "old1";
-            }
-        }
-
-        //  @RequestMapping(method = RequestMethod.GET)
-        //  public ModelAndView allFilms() {
-        //      List<User> users = userService.listUsers();
-        //      ModelAndView modelAndView = new ModelAndView();
-        //      modelAndView.setViewName("users");
-        //       modelAndView.addObject("userList", users);
-        //       return modelAndView;
-        //  }
-*/
-
+    @RequestMapping(value="/add", method=RequestMethod.GET)
+    public String greetingForm(Model model) {
+        model.addAttribute("user", new User());
+        return "add";
     }
+
+    @RequestMapping(value="/add", method=RequestMethod.POST)
+    public String greetingSubmit(@ModelAttribute User user, Model model) {
+        model.addAttribute("user", user);
+        userService.saveUser(user);
+        return "result";
+    }
+
+
+    @GetMapping(value = "/delete")
+    public String deleteUser(@RequestParam(value = "id", required = true) int id, User user, Model model) {
+        model.addAttribute("user", user);
+        System.out.println(id);
+        userService.removeUser(id);
+        return "result";
+    }
+
+}
