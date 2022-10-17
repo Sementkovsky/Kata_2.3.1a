@@ -15,6 +15,11 @@ public class UserServiceImpl implements UserService {
         this.dao = dao;
     }
 
+    @Override
+    public User getById(int id) {
+        return dao.getById(id);
+    }
+
     public List<User> listUsers() {
         return dao.listUsers();
     }
@@ -26,6 +31,11 @@ public class UserServiceImpl implements UserService {
 
     public void removeUser(int id) {
         dao.removeUser(id);
+    }
+
+    public void updateUser(User user) {
+        dao.updateUser(user);
+
     }
 }
 

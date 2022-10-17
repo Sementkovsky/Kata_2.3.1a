@@ -24,13 +24,13 @@ public class UserController {
         return "users";
     }
 
-    @RequestMapping(value="/add", method=RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String greetingForm(Model model) {
         model.addAttribute("user", new User());
         return "add";
     }
 
-    @RequestMapping(value="/add", method=RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String greetingSubmit(@ModelAttribute User user, Model model) {
         model.addAttribute("user", user);
         userService.saveUser(user);
@@ -41,9 +41,41 @@ public class UserController {
     @GetMapping(value = "/delete")
     public String deleteUser(@RequestParam(value = "id", required = true) int id, User user, Model model) {
         model.addAttribute("user", user);
-        System.out.println(id);
         userService.removeUser(id);
-        return "result";
+        return "redirect:/users";
     }
 
+
+@GetMapping("/user-update/{id}")
+    public String editForm (@PathVariable("id") int id, Model model){
+        User user = userService.getById(id);
+        model.addAttribute("user", user);
+        return "/user-update";
+
+}
+
+@PostMapping("/user-update")
+public String editUser(User user){
+        userService.updateUser(user);
+        return "redirect:/users";
+}
+
+/*
+    @GetMapping(value = "/edit")
+    public String editForm(@RequestParam(value = "id", required = true) int id, User user, Model model) {
+        System.out.println(id + userService.getById(id).getName());
+        model.addAttribute("user", userService.getById(id));
+        return "edit";
+    }
+
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String editUser(User user, Model model) {
+        model.addAttribute("user", user);
+        System.out.println(user.getId());
+     //   userService.updateUser(a);
+        return "redirect:/users";
+    }
+
+ */
 }
