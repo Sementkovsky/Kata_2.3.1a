@@ -42,19 +42,10 @@ public class WebConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
-
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
-
-  //  Properties additionalProperties() {
-    //    Properties properties = new Properties();
-      //  properties.setProperty("hibernate.hbm2ddl.auto", "create");
-       // properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-
-       // return properties;
-   // }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {

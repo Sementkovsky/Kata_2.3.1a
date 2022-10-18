@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserDao dao;
+    private final UserDao dao;
 
     public UserServiceImpl(UserDao dao) {
         this.dao = dao;
@@ -24,9 +24,8 @@ public class UserServiceImpl implements UserService {
         return dao.listUsers();
     }
 
-    public User saveUser(User user) {
+    public void saveUser(User user) {
         dao.saveUser(user);
-        return user;
     }
 
     public void removeUser(int id) {
@@ -35,7 +34,6 @@ public class UserServiceImpl implements UserService {
 
     public void updateUser(User user) {
         dao.updateUser(user);
-
     }
 }
 

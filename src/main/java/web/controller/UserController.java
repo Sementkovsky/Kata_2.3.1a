@@ -10,13 +10,12 @@ import web.service.UserService;
 @Controller
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
 
     @GetMapping(value = "/users")
     public String showUsers(Model model) {
@@ -37,45 +36,23 @@ public class UserController {
         return "result";
     }
 
-
     @GetMapping(value = "/delete")
-    public String deleteUser(@RequestParam(value = "id", required = true) int id, User user, Model model) {
+    public String deleteUser(@RequestParam(value = "id") int id, User user, Model model) {
         model.addAttribute("user", user);
         userService.removeUser(id);
         return "redirect:/users";
     }
 
-
-@GetMapping("/user-update/{id}")
-    public String editForm (@PathVariable("id") int id, Model model){
+    @GetMapping("/user-update/{id}")
+    public String editForm(@PathVariable("id") int id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "/user-update";
+    }
 
-}
-
-@PostMapping("/user-update")
-public String editUser(User user){
+    @PostMapping("/user-update")
+    public String editUser(User user) {
         userService.updateUser(user);
         return "redirect:/users";
-}
-
-/*
-    @GetMapping(value = "/edit")
-    public String editForm(@RequestParam(value = "id", required = true) int id, User user, Model model) {
-        System.out.println(id + userService.getById(id).getName());
-        model.addAttribute("user", userService.getById(id));
-        return "edit";
     }
-
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String editUser(User user, Model model) {
-        model.addAttribute("user", user);
-        System.out.println(user.getId());
-     //   userService.updateUser(a);
-        return "redirect:/users";
-    }
-
- */
 }
