@@ -18,8 +18,7 @@ public class UserController {
     }
 
     @GetMapping(value = "")
-    public String startPage(Model model) {
-        model.addAttribute("listUsers", userService.listUsers());
+    public String startPage() {
         return "index";
     }
 
@@ -42,13 +41,6 @@ public class UserController {
         return "result";
     }
 
-    @GetMapping(value = "/delete")
-    public String deleteUser(@RequestParam(value = "id") int id, User user, Model model) {
-        model.addAttribute("user", user);
-        userService.removeUser(id);
-        return "redirect:/users";
-    }
-
     @GetMapping("/user-update/{id}")
     public String editForm(@PathVariable("id") int id, Model model) {
         User user = userService.getById(id);
@@ -56,9 +48,25 @@ public class UserController {
         return "/user-update";
     }
 
-    @PostMapping("/user-update")
+    @PatchMapping("/user-update")
     public String editUser(User user) {
         userService.updateUser(user);
         return "redirect:/users";
     }
+
+    @GetMapping("/user-delete/{id}")
+    public String deleteForm(@PathVariable("id") int id, Model model) {
+        User user = userService.getById(id);
+        model.addAttribute("user", user);
+        return "/user-delete";
+    }
+
+    @DeleteMapping("/user-delete")
+    public String deleteUser(int id) {
+        userService.removeUser(id);
+        return "redirect:/users";
+    }
 }
+
+
+

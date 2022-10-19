@@ -31,7 +31,7 @@
             <td th:utext="${user.getSecondName()}">...</td>
             <td th:utext="${user.age}">...</td>
             <td><a th:href="@{/user-update/{id}(id=${user.getId})}">Изменить</a></td>
-            <td><a th:href="@{/delete(id=${user.getId()})}">Удалить</a></td>
+            <td><a th:href="@{/user-delete/{id}(id=${user.getId})}">Удалить</a></td>
         </tr>
     </table>
 </div>
